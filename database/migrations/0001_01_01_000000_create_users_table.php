@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();//PRIMARY UNIQUE UNSIGNED BIG INTEGER AUTO INCREMENT
-            $table->string('name')->unique();
+            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password')->nullable();
             $table->rememberToken();

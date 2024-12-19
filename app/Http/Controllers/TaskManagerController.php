@@ -7,18 +7,24 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class TaskManagerController extends Controller
 {
+    use ValidatesRequests;
     public function create(): View|Factory|Application
     {
         return view('user.createTask');
     }
 
-    public function store(): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        $this->validate(request());
+        $validator = Validator::make($request->all(), [
+           'name' => 'required|min:5',
+           'details'=> 'required',
+        ]);
         Task::create([
             'name' => request('name'),
             'details' => request('details')
@@ -45,9 +51,13 @@ class TaskManagerController extends Controller
         $task = Task::find($id);//single object
         return view('user.updateTask',compact('task'));
     }
-    public function update($id): RedirectResponse
+    public function update(Request $request,$id): RedirectResponse
     {
-        $this->validate(request());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'details' => 'nullable|string',
+        ]);
+         //$this->validate(request());
         //$task = Task::find($id);//single object
         //$task->update([
             //'name' => request('name'),
@@ -71,10 +81,4 @@ class TaskManagerController extends Controller
         Task::find($id)->delete();
         return to_route('home')->with('success', 'Task deleted successfully');
     }
-
-    private function validate(mixed $request)
-    {
-    }
-
-
 }
