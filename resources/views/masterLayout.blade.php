@@ -24,7 +24,12 @@
                      <div class="container">
                          <a class="navbar-brand" href="{{ route('home') }}">Task Manager</a>
                          <div class="float-right">
-                             <a class="navbar-brand" href="{{ route('task.create.show') }}">Create</a>
+                            @if(\Illuminate\Support\Facades\Auth::check())
+                               <a class="navbar-brand" href="{{ route('task.create.show') }}">Create</a>
+                            @else
+                            <a class="navbar-brand" href="{{ route('user.login.show') }}">Login</a>
+                            <a class="navbar-brand" href="{{ route('user.register.show') }}">Register</a>
+                            @endif
                          </div>
                      </div>
                  </nav>

@@ -16,7 +16,9 @@
             <input class="form-control" type="password" name="password">
             <label class="form-label">Confirm Password: </label>
             <input class="form-control" type="password" name="password_confirmation">
-            <input class="btn btn-block btn-success mt-3" type="submit" name="register" value="Register">
+            <div class="d-flex" style="height: 100vh;">
+               <input class="btn btn-primary m-auto w-100 mt-3" type="submit" name="register" value="Register">
+            </div>
         </form>
     </div>
 </div>

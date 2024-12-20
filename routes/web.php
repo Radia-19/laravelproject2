@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 //Route::get('/home',[HomeController::class,'index'])->middleware('auth')->name('home');
 
-Route::get('/',[TaskManagerController::class,'index'])->name('home');
+Route::get('/home',[TaskManagerController::class,'index'])->name('home');
 
 Route::get('task/create',[TaskManagerController::class,'create'])->name('task.create.show');
 Route::post('task/create',[TaskManagerController::class,'store'])->name('task.create');
@@ -27,6 +27,8 @@ Route::get('/user-verify/{userId}/{token}', [UserAuthController::class,'verifyUs
 
 
 Route::get('/login',[UserAuthController::class,'showLogin'])->name('user.login.show');
+Route::post('/login',[UserAuthController::class,'login'])->name('user.login');
+Route::get('/logout', [UserAuthController::class, 'logout'])->name('logout');
 
 
 
@@ -34,20 +36,7 @@ Route::get('/login',[UserAuthController::class,'showLogin'])->name('user.login.s
 
 
 
-
-
-
-
-
-
-
-
-
-
-//Route::post('/login', [LoginController::class, 'login']);
-//Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 //Auth::routes();
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 
 
-class EmailVerify extends Mailable
+class EmailVerify extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -34,7 +34,7 @@ class EmailVerify extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('iamr.adia2629@gmail.com','Wellcome to new page'),
+            from: new Address('iamr.adia2629@gmail.com','Welcome to new page'),
             subject: 'Email Verify',
         );
     }
@@ -48,7 +48,7 @@ class EmailVerify extends Mailable
             view: 'mail.emailVerify',
             with: [
                 'userId' => $this->userId,
-                'token' => $this->token,
+                'token' => $this->token
             ],
         );
     }
