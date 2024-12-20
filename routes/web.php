@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 //Route::get('/home',[HomeController::class,'index'])->middleware('auth')->name('home');
 
-Route::get('/home',[TaskManagerController::class,'index'])->name('home');
+Route::get('/',[TaskManagerController::class,'index'])->name('home');
 
 Route::get('task/create',[TaskManagerController::class,'create'])->name('task.create.show');
 Route::post('task/create',[TaskManagerController::class,'store'])->name('task.create');
