@@ -9,9 +9,9 @@
         <form action="{{ route('user.register')}}" method="POST">
             @csrf
             <label class="form-label">Username: </label>
-            <input class="form-control" type="text" name="username">
+            <input class="form-control" type="text" name="username" value="{{ old('username')}}">
             <label class="form-label">Email: </label>
-            <input class="form-control" type="email" name="email">
+            <input class="form-control" type="email" name="email" value="{{ old('email')}}">
             <label class="form-label">Password: </label>
             <input class="form-control" type="password" name="password">
             <label class="form-label">Confirm Password: </label>

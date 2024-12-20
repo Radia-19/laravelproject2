@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class TaskManagerController extends Controller
@@ -25,10 +26,12 @@ class TaskManagerController extends Controller
            'name' => 'required|min:5',
            'details'=> 'required',
         ]);
+    DB::transaction(function () {
         Task::create([
             'name' => request('name'),
             'details' => request('details')
         ]);
+    });
         return to_route('home')->with('success', 'Task added successfully');
         //return redirect()->route('home');
         //return redirect('url');
@@ -63,10 +66,12 @@ class TaskManagerController extends Controller
             //'name' => request('name'),
             //'details' => request('details')
         //]);
+
         Task::find($id)->update([
             'name' => request('name'),
             'details' => request('details')
         ]);
+
         return to_route('home')->with('success', 'Task updated successfully');
     }
     public function updateStatus($id,$status): RedirectResponse

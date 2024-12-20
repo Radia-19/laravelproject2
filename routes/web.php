@@ -23,7 +23,10 @@ Route::get('task/delete/{id}',[TaskManagerController::class,'delete'])->name('ta
 Route::get('/register',[UserAuthController::class,'showRegister'])->name('user.register.show');
 Route::post('/register',[UserAuthController::class,'register'])->name('user.register');
 
-Route::get('/login', [UserAuthController::class,'showLogin'])->name('user.login.show');
+Route::get('/user-verify/{userId}/{token}', [UserAuthController::class,'verifyUser'])->name('user.verify');
+
+
+Route::get('/login',[UserAuthController::class,'showLogin'])->name('user.login.show');
 
 
 

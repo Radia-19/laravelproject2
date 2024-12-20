@@ -18,7 +18,7 @@
                         @else
                             <a class="btn btn-warning btn-sm" href="{{ route('task.updateStatus',[$task->id,'pending']) }}">Back to pending</a>
                         @endif
-                        <a class="text-white" href="{{ route('task.show',[$task->id]) }}">Edit</a>
+                        <a class="text-info" href="{{ route('task.show',[$task->id]) }}">Edit</a>
                         <a class="text-danger" onclick="return confirm('Are you sure?')" href="{{ route('task.delete',[$task->id]) }}">Delete</a>
                      </div>
                     </div>

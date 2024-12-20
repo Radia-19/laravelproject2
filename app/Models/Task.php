@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
-    //
-    public static function create(array $array)
-    {
-    }
+
+    use HasFactory;
+
     protected $fillable = ['name','details'];
 
     protected $table = 'tasks';
@@ -18,6 +18,9 @@ class Task extends Model
     // public static function find($id)
     // {
 
+    // }
+    // public static function create(array $array)
+    // {
     // }
 
 

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\User;
+use App\Models\User;
 use App\Models\UserVerification;
+use App\Mail\EmailVerify;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class UserAuthController extends Controller
@@ -19,21 +22,45 @@ class UserAuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' =>'required|confirmed'
         ]);
+
+        DB::transaction(function () {
+
         $user = User::create([
-            'username' = request('username'),
+            'username' => request('username'),
             'email'=> request('email'),
             'password'=> bcrypt(request('password'))
         ]);
 
         //GENERATE TOKEN
-        UserVerification:;create([
-            'user_id'=> $user->id,
-            'token'=> sha1(rand(10000,99999)),
-
+        $token = sha1(rand(10000,99999));
+        $user->verification()->create([
+            'token'=> $token
         ]);
-        //SEND EMAIL VERIFY
 
-        //return to_route('user.login.show')->with('success','Registered Successfully');
+        // User::create([
+        //     'username' => request('username'),
+        //     'email'=> request('email'),
+        //     'password'=> bcrypt(request('password'))
+        // ])->verification()->create([
+        //     'token'=> sha1(rand(10000,99999))
+        // ]);
+
+        // UserVerification:;create([
+        //     'user_id'=> $user->id,
+        //     'token'=> sha1(rand(10000,99999))
+        // ]);
+
+        //SEND EMAIL VERIFY
+        try {
+            Mail::to(\request('email'))->send(new EmailVerify($user->id, $token));
+        } catch (\Exception $e) {
+            return back()->withErrors(['email' => 'Failed to send verification email.']);
+        }
+
+       });
+
+        return to_route('user.login.show')->with('success', 'Registered Successfully. Please check your email for verification.');
+
         //dd('here');
     }
     public function showLogin()
