@@ -4,8 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(\App\Services\UserAuth::class, function ($app) {
+            return new \App\Services\UserAuth();
+        });
     }
 
     /**
@@ -25,7 +28,15 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
 
         DB::listen(function ($query) {
-            logger($query->sql, $query->bindings, $query->time);
+            Log::info('Query executed', [
+                'sql' => $query->sql,
+                'bindings' => $query->bindings,
+                'time' => $query->time,
+            ]);
         });
+
+        // DB::listen(function ($query) {
+        //     logger($query->sql, $query->bindings, $query->time);
+        // });
     }
 }

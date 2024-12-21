@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UserAuthService;
+
 use App\Models\Task;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -12,10 +14,18 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use userAuth;
+//use userAuth;
+
 class TaskManagerController extends Controller
 {
+    protected $userAuth;
+
     public function index(): View|Factory|Application
     {
+
+        $userAuth = app('userAuth');
+
         $allTasks = Task::paginate(5);//SELECT *FROM tasks
         //$allTasks = Task::where('status','pending')->get();
         //$allTasks = Task::where('status','pending')->first(); //single object
