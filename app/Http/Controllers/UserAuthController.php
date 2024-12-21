@@ -115,4 +115,22 @@ class UserAuthController extends Controller
         return redirect()->route('user.login.show');
     }
 
+    public function adminLogin(Request $request)
+    {
+        $validated = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        if (Auth::guard('admin')->attempt([
+            'username' => $request->username,
+            'password' => $request->password
+            ])){
+                return redirect()->route('home')->with('success', 'Login successful.');
+        }else{
+            return redirect()->back()->with(('error'), 'Invalid credentials.');
+        }
+
+    }
+
 }

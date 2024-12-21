@@ -21,5 +21,5 @@ class UserAuthCheckMiddleware
         }else{
             return to_route('user.login.show')->with('error','You Must Login First!');
         }
-}
+    }
 }

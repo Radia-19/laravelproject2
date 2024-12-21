@@ -26,6 +26,7 @@
                          <div class="float-right">
                             @if(\Illuminate\Support\Facades\Auth::check())
                                <a class="navbar-brand" href="{{ route('task.create.show') }}">Create</a>
+                               <a class="navbar-brand" href="{{ route('task.create.show') }}">Add Google Account</a>
                                <a class="navbar-brand" href="{{ route('logout') }}">[{{ (\Illuminate\Support\Facades\Auth::user()->username)}}] | Logout</a>
                             @else
                             <a class="navbar-brand" href="{{ route('user.login.show') }}">Login</a>

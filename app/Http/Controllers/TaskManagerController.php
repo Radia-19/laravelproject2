@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use userAuth;
@@ -26,7 +27,7 @@ class TaskManagerController extends Controller
 
         $userAuth = app('userAuth');
 
-        $allTasks = Task::paginate(5);//SELECT *FROM tasks
+        $allTasks = Task::where('user_id',Auth::id())->paginate(5);//SELECT *FROM tasks
         //$allTasks = Task::where('status','pending')->get();
         //$allTasks = Task::where('status','pending')->first(); //single object
         return view('home', compact('allTasks'));
@@ -43,6 +44,7 @@ class TaskManagerController extends Controller
         $validator = Validator::make($request->all(), [
            'name' => 'required|min:5',
            'details'=> 'required',
+           'user_id'=> Auth::id(),
         ]);
         $validator->validate();
 

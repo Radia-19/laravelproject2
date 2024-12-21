@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class VerifyUserMiddleware
+class AdminAuthCheckMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,12 +16,10 @@ class VerifyUserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->email_verified == 1) {
+        if(Auth::guard('admin')->check()){
             return $next($request);
         }else{
-            Auth::logout();
-            return to_route('user.login.show')->with('error','Check Your Email To Verify Your Account');
+            return to_route('user.login.show')->with('error','You Must Login First!');
         }
     }
 }
-//Auth::check() &&
